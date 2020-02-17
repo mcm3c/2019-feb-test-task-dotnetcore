@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <DefaultItemExcludes>$(DefaultItemExcludes);.history/**</DefaultItemExcludes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="**/.history/**" />
+    <Content Remove="**/.history/**" />
+    <EmbeddedResource Remove="**/.history/**" />
+  </ItemGroup>
+
+</Project>
