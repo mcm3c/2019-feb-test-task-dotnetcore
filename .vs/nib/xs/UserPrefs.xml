@@ -1,0 +1,30 @@
+﻿<Properties StartupConfiguration="{FB3BD7CB-ED4D-4091-AFF1-3ADAC643B1BC}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/JobsController.cs">
+    <Files>
+      <File FileName="Startup.cs" Line="21" Column="23" />
+      <File FileName="nib.csproj" Line="1" Column="1" />
+      <File FileName="Program.cs" Line="1" Column="1" />
+      <File FileName="Controllers/JobsController.cs" Line="15" Column="13" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="nib" expanded="True">
+            <Node name="nib" expanded="True">
+              <Node name="Controllers" expanded="True">
+                <Node name="JobsController.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.nib PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
