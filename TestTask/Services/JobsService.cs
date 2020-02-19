@@ -1,38 +1,47 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Abstractions;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using nib.Models;
+using TestTask.Models;
 
-namespace nib.Services {
+namespace TestTask.Services {
   public class JobsService {
-    private const string LOCATIONS_CACHE_KEY = "LOCATIONS";
-    private const string JOBS_CACHE_KEY = "JOBS";
+    public const string LOCATIONS_CACHE_KEY = "LOCATIONS";
+    public const string JOBS_CACHE_KEY = "JOBS";
     private const int CACHE_EXPIRATION_TIME_SECONDS = 300;
     private IHttpClientFactory clientFactory;
     private IMemoryCache memoryCache;
     private IConfiguration configuration;
-    private ILogger logger;
+    private IFileSystem fileSystem;
 
-    public JobsService(IConfiguration configuration, IHttpClientFactory clientFactory, IMemoryCache memoryCache, ILogger<JobsService> logger) {
+    public JobsService(
+      IConfiguration configuration,
+      IHttpClientFactory clientFactory,
+      IMemoryCache memoryCache,
+      IFileSystem fileSystem
+    ) {
       this.clientFactory = clientFactory;
       this.memoryCache = memoryCache;
       this.configuration = configuration;
-      this.logger = logger;
+      this.fileSystem = fileSystem;
     }
 
+    /// <summary>
+    /// Gets a flat collection of jobs
+    /// </summary>
+    /// <returns>The all jobs.</returns>
     public IEnumerable<Job> GetAllJobs() {
       List<Job> jobs;
       if (memoryCache.TryGetValue(JOBS_CACHE_KEY, out jobs)) {
         return jobs;
       }
-      logger.LogInformation("Populating Jobs from the local file");
-      var serializedJobs = File.ReadAllText(configuration["JobsJsonPath"]);
+      var serializedJobs = fileSystem.File.ReadAllText(configuration["JobsJsonPath"]);
       jobs = JsonConvert.DeserializeObject<List<Job>>(serializedJobs);
       var cacheEntryOptions = new MemoryCacheEntryOptions()
         .SetSlidingExpiration(TimeSpan.FromSeconds(CACHE_EXPIRATION_TIME_SECONDS));
@@ -41,13 +50,16 @@ namespace nib.Services {
       return jobs;
     }
 
+    /// <summary>
+    /// Gets all locations and enriches with jobs
+    /// </summary>
+    /// <returns>Locations with jobs.</returns>
     public async Task<IEnumerable<Location>> GetAllLocations() {
       List<Location> locations;
       if (memoryCache.TryGetValue(LOCATIONS_CACHE_KEY, out locations)) {
         return locations;
       }
 
-      logger.LogInformation("Requesting locations from the remote API");
       var client = clientFactory.CreateClient();
       var response = await client.GetStringAsync(configuration["LocationApiEndpoint"]);
       locations = JsonConvert.DeserializeObject<List<Location>>(response);
@@ -58,7 +70,10 @@ namespace nib.Services {
       }
 
       foreach (var job in jobs) {
-        locationsDictionary[job.LocationID].Jobs.Add(job);
+        // jobs that don't have a corresponding location, will be skipped
+        if (locationsDictionary.ContainsKey(job.LocationID)) {
+          locationsDictionary[job.LocationID].Jobs.Add(job);
+        }
       }
       var cacheEntryOptions = new MemoryCacheEntryOptions()
         .SetSlidingExpiration(TimeSpan.FromSeconds(CACHE_EXPIRATION_TIME_SECONDS));

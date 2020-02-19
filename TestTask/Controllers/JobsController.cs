@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using nib.Models;
-using nib.Services;
+using TestTask.Models;
+using TestTask.Services;
 using Microsoft.AspNet.OData;
 using System.Threading.Tasks;
 
-namespace nib.Controllers {
+namespace TestTask.Controllers {
   public class JobsController : Controller {
     private JobsService jobsService;
     public JobsController(JobsService newJobsService) {

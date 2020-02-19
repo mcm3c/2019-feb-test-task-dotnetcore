@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace nib.Models {
+namespace TestTask.Models {
   public class Location {
     public int ID { get; set; }
     public string Name { get; set; }
