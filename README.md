@@ -9,7 +9,7 @@
 
 *Scenario:*
 
-nibis revamping their Careers page to attract new employees and allow prospectiv eemployees to find the roles which they wish to apply for. The designer in your team has provided a design for the Careers page with variations at mobile, tablet and desktop resolutions. As the team’s developer you are required to implement the page. (Feel free to use any frameworks or tools you’re comfortable with).
+A company is revamping their Careers page to attract new employees and allow prospectiv eemployees to find the roles which they wish to apply for. The designer in your team has provided a design for the Careers page with variations at mobile, tablet and desktop resolutions. As the team’s developer you are required to implement the page. (Feel free to use any frameworks or tools you’re comfortable with).
 
 *Challenge constraints:*
 
