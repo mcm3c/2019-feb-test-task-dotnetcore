@@ -2,8 +2,8 @@
 
 ### Tech Stack
 
-React ()
-.NET Core (this repository)
+* React (https://github.com/mcm3c/2019-feb-test-task-react)
+* .NET Core (this repository)
 
 ### Task requirements
 
