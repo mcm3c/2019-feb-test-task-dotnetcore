@@ -17,6 +17,18 @@ namespace TestTask {
       services.AddSingleton<JobsService>();
       services.AddSingleton<IFileSystem, FileSystem>();
       services.AddHttpClient();
+      services.AddCors(options => {
+        options.AddPolicy("AllowAllOrigins", builder => {
+          builder
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+        });
+
+        options.DefaultPolicyName = "AllowAllOrigins";
+      });
+
+
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
@@ -24,6 +36,7 @@ namespace TestTask {
         app.UseDeveloperExceptionPage();
       }
 
+      app.UseCors("AllowAllOrigins");
       app.UseRouting();
 
       var builder = new ODataConventionModelBuilder();
