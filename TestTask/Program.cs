@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -17,8 +18,9 @@ namespace TestTask {
               logging.AddConsole();
             })
             .ConfigureWebHostDefaults(webBuilder => {
+              var port = Environment.GetEnvironmentVariable("PORT") ?? "3000";
               webBuilder
-                .UseUrls("http://localhost:3000")
+                .UseUrls("http://0.0.0.0:" + port)
                 .UseStartup<Startup>();
             });
   }
